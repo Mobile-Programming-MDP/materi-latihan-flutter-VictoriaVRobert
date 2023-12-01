@@ -46,11 +46,11 @@ class _SignInScreenState extends State<SignInScreen> {
         prefs.setBool('isSignedIn', true);
       });
       // Pemanggilan untuk menghapus semua halaman dalam tumpukan navigasi
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).popUntil((route) => route.isFirst);
        });
        // Sign in berhasil, navigasikan ke layar utama
-       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacementNamed(context, '/');
        });
     } else {
