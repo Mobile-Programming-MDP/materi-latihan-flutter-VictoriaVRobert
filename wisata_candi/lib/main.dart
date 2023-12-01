@@ -19,31 +19,51 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Wisata Candi',
-      theme: ThemeData(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.deepPurple),
+          titleTextStyle: TextStyle(
+            color: Colors.deepPurple,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Colors.deepPurple).copyWith(
+          primary: Colors.deepPurple,
+          surface: Colors.deepPurple[50],
+        ),
+        useMaterial3: true,
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        // useMaterial3: true,
+      ),
+      //home: SignUpScreen()
       home: MainScreen(),
-      initialRoute: '/',
-      routes: {
-        '/homescreen': (context) => const HomeScreen(),
-        // '/signin': (context) => const  SignInScreen(),
-        '/signup': (context) => const SignUpScreen(),
-      },
-      // home: DetailScreen(candi: candiList[0]),
+      //home: HomeScreen(),
+      //home: SearchScreen(),
+      //home: SignInScreen(),
       //home: ProfileScreen(),
+      //home: DetailScreen(candi: candiList[0]),
+      initialRoute: '/',
+      routes:{
+        '/homescreen' : (context) => const HomeScreen(),
+        '/signin' : (context) => SignInScreen(),
+        '/signup' : (context) => const SignUpScreen(),
+      }
     );
   }
 }
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
-
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  //TODO: Deklarasikan variabel
+  //TODO: 1. Deklarasikan variabel
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomeScreen(),
@@ -51,17 +71,16 @@ class _MainScreenState extends State<MainScreen> {
     FavoriteScreen(),
     ProfileScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //TODO:2. Buat properti body berupa widget yang ditampilkan
+      //TODO: 2. Buat properti body berupa widget yang ditampilkan
       body: _children[_currentIndex],
-      //TODO:3. buat properti bottomNavigationBar dengan nilai THeme
+      //TODO: 3. Buat properti bottonNavigationBar dengan nilai Theme
       bottomNavigationBar: Theme(
-        //TODO:4. Buat data dan child dari Theme
-        data: Theme.of(context).copyWith(
-          canvasColor: Colors.deepPurple[50],
-        ),
+        //TODO: 4. Buat data dan child dari Theme
+        data: Theme.of(context).copyWith(canvasColor: Colors.deepPurple[50]),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) {
@@ -69,21 +88,19 @@ class _MainScreenState extends State<MainScreen> {
               _currentIndex = index;
             });
           },
-          items: [
+          items: const [
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: Colors.deepPurple,
-              ),
-              label: 'Home',
-            ),
+                icon: Icon(
+                  Icons.home,
+                  color: Colors.deepPurple,
+                ),
+                label: 'Home'),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                color: Colors.deepPurple,
-              ),
-              label: 'Search',
-            ),
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.deepPurple,
+                ),
+                label: 'Search'),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.favorite,
@@ -92,7 +109,10 @@ class _MainScreenState extends State<MainScreen> {
               label: 'Favorite',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: Colors.deepPurple),
+              icon: Icon(
+                Icons.person,
+                color: Colors.deepPurple,
+              ),
               label: 'Profile',
             ),
           ],
