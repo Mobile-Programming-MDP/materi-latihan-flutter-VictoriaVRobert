@@ -18,12 +18,13 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   String _errorText = '';
-  bool _isSignedIn = true;
+  bool _isSignedIn = false;
   bool _obscurePassword = true;
 
   Future<Map<String, String>> _retrieveAndDecryptDataFromPrefs(
-  SharedPreferences sharedPreferences,
+  SharedPreferences prefs,
   ) async {
+    final sharedPreferences = await prefs;
     final encryptedUsername = sharedPreferences.getString('username') ?? '';
     final encryptedPassword = sharedPreferences.getString('password') ?? '';
     final keyString = sharedPreferences.getString('key') ?? '';

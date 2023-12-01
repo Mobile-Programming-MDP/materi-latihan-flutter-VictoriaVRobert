@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wisata_candi/widgets/profile_info_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -11,14 +12,40 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   // TODO: 1. Deklarasi Variable (state) yang dibutuhkan
   bool isSignIn = false;
-  String fullName = "VictoriaVR";
-  String userName = "Victoria";
-  int favoriteCandiCount = 2;
+  String fullName = "";
+  String userName = "";
+  int favoriteCandiCount = 0;
   late Color iconColor;
+
+  late SharedPreferences _prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  _loadUserData() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isSignIn = _prefs.getBool('isSignIn') ?? false;
+      fullName = _prefs.getString('fullName') ?? "";
+      userName = _prefs.getString('userName') ?? "";
+      favoriteCandiCount = _prefs.getInt('favoriteCandiCount') ?? 0;
+    });
+  }
+
+  _saveUserData() async {
+    await _prefs.setBool('isSignIn', isSignIn);
+    await _prefs.setString('fullName', fullName);
+    await _prefs.setString('userName', userName);
+    await _prefs.setInt('favoriteCandiCount', favoriteCandiCount);
+  }
 
   void signIn() {
     Navigator.pushNamed(context, '/signin');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +77,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               AssetImage('images/placeholder_image.png'),
                         ),
                       ),
-                      
                     ],
                   ),
                 ),
@@ -115,7 +141,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(
                       height: 20,
                     ),
-          
                   ],
                 ),
               ),
